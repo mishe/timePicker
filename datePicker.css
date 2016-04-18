@@ -14,4 +14,7 @@
 .pick-date-box .pick-date{float:left;width:50px;height:35px;text-align:center;line-height:18px;font-size:12px}
 .pick-date-box .pick-date.active{color:#fa0a5f}
 .pick-time-box{padding:8px;background: #f8f5f6}
-.pick-time-box .pick-time{float:left;width:45px;height:43px;padding:4px;border:1px solid #eee;background:#fff;margin:2px 2px 0 0}
+.pick-time-box .pick-time{float:left;width:45px;font-size:10px;height:43px;padding:4px;border:1px solid #ddd;background:#fff;margin:2px 2px 0 0}
+.pick-time-box .pick-time.booked{background:#f8f5f6}
+.pick-time-box .pick-time.active{background:#fa0a5f;color:#fff}
+.pick-time-box .pick-time.booked .booked-txt{display:block;text-align:right;font-size:10px;padding-top:12px}
