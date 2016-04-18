@@ -4,3 +4,14 @@
 .date-picker .time-list{float:left;height:100%;width:50%;overflow:auto}
 .date-picker .list-one{height:40px;line-height:40px}
 .date-picker .date-pick-light{position:absolute;bottom:80px;width:100%;height:40px;background:rgba(0,0,0,.2)}
+
+
+.choose-server-time-wrap{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7)}
+.choose-server-time{position:absolute;top:50%;left:50%;width:300px;margin:-160px 0 0 -150px;background:#fff}
+.choose-server-time h3{padding:20px 0;font-size: 15px;text-align:center;}
+.pick-date-box{overflow:hidden;padding-bottom: 8px}
+.pick-date-box .animate{height:35px}
+.pick-date-box .pick-date{float:left;width:50px;height:35px;text-align:center;line-height:18px;font-size:12px}
+.pick-date-box .pick-date.active{color:#fa0a5f}
+.pick-time-box{padding:8px;background: #f8f5f6}
+.pick-time-box .pick-time{float:left;width:45px;height:43px;padding:4px;border:1px solid #eee;background:#fff;margin:2px 2px 0 0}
