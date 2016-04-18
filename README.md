@@ -16,3 +16,34 @@
 
 * getDay() 返回选择的日期
 * getTime() 返回用户选择的时间
+
+
+## 调用范例
+```javascript
+var booksInfo=[];
+        var picker=$.timePicker({
+            selected:curSelected,
+            changeDay:function(day){
+                var info=booksInfo[day]||['15:00','17:00','21:00'];
+                if(info){
+                    mockBooksInfo(info);
+                }else{
+                    getBooksInfo(day);
+                }
+                function mockBooksInfo(info){
+                    $.each(info,function(i,n){
+                        $('.pick-time[data-value="'+n+'"]').addClass('booked').append('<span class="booked-txt">预约</span>');
+                    });
+                }
+            }
+        },function(){
+            curSelected=picker.getDay()+' '+picker.getTime();
+            console.log(curSelected)
+        });
+```
+
+
+## 效果图：
+
+<img src="https://github.com/mishe/timePicker/blob/master/datePicker2.png?raw=true">
+<img src="https://github.com/mishe/timePicker/blob/master/datePicker.png?raw=true">
