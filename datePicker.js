@@ -116,7 +116,7 @@ $.extend({
                 startDate: new Date(),
                 days: 14,
                 timeRange: '8:30-21:30',
-                sp: '/',
+                sp: '-',
                 changeDay: function () {},
                 select:'2016/04/08 15:00'
             },
