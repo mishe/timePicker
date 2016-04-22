@@ -137,13 +137,17 @@ $.extend({
         if (!opt.timeRange) throw  new Error('时间间距格式不正确');
         if (opt.days < 1) throw  new Error('日期跨度不能小于1天');
 
+        day=new Date(opt.startDate);
+        var showToday=getStartDay();
+        if(!showToday){
+            day=new Date(day.getTime()+86400000);
+        }
+        day= day.getFullYear() + opt.sp + n2s(day.getMonth() + 1) + opt.sp + n2s(day.getDate());
         timeList = getTimeList();
-        layoutDayList = getDayList();
+        layoutDayList = getDayList(showToday);
 
-        day = new Date(opt.startDate);
-        day = day.getFullYear() + opt.sp + n2s(day.getMonth() + 1) + opt.sp + n2s(day.getDate());
 
-        var obj = $(daysTemplate(dayList));
+        var obj = $(daysTemplate(showToday));
         $('body').append(obj);
         var overSlider=obj.find('.animate').overSlide();
 
@@ -160,9 +164,20 @@ $.extend({
             obj.find('.pick-date').eq(0).addClass('active');
         }
 
+        function getStartDay(){
+            var endTime=opt.timeRange.split('-')[1].split(':');
+            endTime=endTime[1]?parseInt(endTime[0],10)+.5:parseInt(endTime[0],10)
+            if(Math.floor(new Date().getHours()) + 1>endTime){
+                return false;
+            }
+            return true;
+        }
+
         function showTimeList(day) {
-            var times = timeList;
-            if (day == dayList[0]) {
+            var times = timeList,
+                today=new Date();
+            today=today.getFullYear() + opt.sp + n2s(today.getMonth() + 1) + opt.sp + n2s(today.getDate());
+            if (day == today) {
                 times = getTimeList([Math.floor(new Date().getHours()) + 1])
             }
 
@@ -176,8 +191,8 @@ $.extend({
                 end = range[1].split(':'),
                 timeArray = [];
 
-            start = start[1] ? parseInt(start[0]) + .5 : parseInt(start[0]);
-            end = end[1] ? parseInt(end[0]) + .5 : parseInt(end[0]);
+            start = start[1] ? parseInt(start[0],10) + .5 : parseInt(start[0],10);
+            end = end[1] ? parseInt(end[0],10) + .5 : parseInt(end[0],10);
 
             console.log(start, end);
 
@@ -195,23 +210,26 @@ $.extend({
             return n2s(day.getMonth() + 1) + opt.sp + n2s(day.getDate());
         }
 
-        function getDayList() {
-            var tempDay = day = new Date(opt.startDate),
+        function getDayList(showToday) {
+            var tempDay = startDay = new Date(opt.startDate),
                 days = [],
                 cnDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                temp;
+                temp,
+                len=opt.days;
 
-            temp = getMonthDay(day);
-            days.push('今天<br>' + temp);
-            dayList.push(day.getFullYear() + opt.sp + temp);
+            if(showToday) {
+                temp = getMonthDay(startDay);
+                days.push('今天<br>' + temp);
+                dayList.push(startDay.getFullYear() + opt.sp + temp);
+            }
 
-            tempDay = new Date(day.getTime() + 86400000);
+            tempDay = new Date(startDay.getTime() + 86400000);
             temp = getMonthDay(tempDay);
             days.push('明天<br>' + temp);
             dayList.push(tempDay.getFullYear() + opt.sp + temp);
 
-            for (var i = 2; i < opt.days; i++) {
-                tempDay = new Date(day.getTime() + i * 86400000);
+            for (var i = 2; i < len; i++) {
+                tempDay = new Date(startDay.getTime() + i * 86400000);
                 temp = getMonthDay(tempDay);
                 days.push(cnDay[tempDay.getDay()] + '<br>' + temp);
                 dayList.push(tempDay.getFullYear() + opt.sp + temp);
@@ -219,10 +237,15 @@ $.extend({
             return days;
         }
 
-        function daysTemplate() {
-            var str = '<div class="choose-server-time-wrap"><div class="choose-server-time"><span class="close-btn"></span><h3>请选择服务时间</h3><div class="overslider pick-date-box"><ul class="animate">';
+        function daysTemplate(showToday) {
+            var str = '<div class="choose-server-time-wrap"><div class="choose-server-time"><span class="close-btn"></span><h3>请选择服务时间</h3><div class="overslider pick-date-box"><ul class="animate">',
+                len=opt.days;
+            if(!showToday){
+                len-=1;
+            }
             str += '<li class="pick-date" data-value="' + dayList[0] + '">' + layoutDayList[0] + '</li>';
-            for (var i = 1; i < opt.days; i++) {
+
+            for (var i = 1; i < len; i++) {
                 str += '<li class="pick-date" data-value="' + dayList[i] + '">' + layoutDayList[i] + '</li>';
             }
             str += '</ul></div><div class="pick-time-box clearfix"><ul></ul></div></div></div>';
