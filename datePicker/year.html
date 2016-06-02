@@ -1,0 +1,11 @@
+<div class="picker-year-box">
+    <div class="picker-data-box clearfix">
+        <ul>
+            <% _.each(year,function(n){ %>
+            <li class="pick-date <%=index==n?'active':''%>"><%=n%></li>
+            <% }) %>
+        </ul>
+        <span class="prev"></span>
+        <span class="next"></span>
+    </div>
+</div>

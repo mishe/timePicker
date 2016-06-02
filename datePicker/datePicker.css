@@ -1,0 +1,42 @@
+.date-picker-box{position:absolute;top:150px;left:50%;width:300px;margin-left:-150px;background:#fff;box-shadow:0 0 0 2px #ccc;text-align: center}
+.date-picker-box .picker-header{height:40px;}
+.date-picker-box .picker-header .picker-type{float:left;width:25%;line-height:40px}
+.date-picker-box .picker-header .picker-type.active{background:#f0f0f0}
+.date-picker-box .picker-box{border:1px solid #ccc;border-width:1px 0}
+.date-picker-box .picker-size{float:left;width:15%;line-height:30px;border-right:1px solid #ccc}
+.date-picker-box .picker-size.active{background:#f0f0f0}
+.date-picker-box .picker-size-text{float:left;width:25%;line-height:30px;border-right:1px solid #ccc}
+.date-picker-box .picker-btn-box{height:35px;line-height:35px;border-top:1px solid #ccc}
+.date-picker-box .picker-btn-box .yes-btn{float:left;width:50%;background:#f0f0f0;cursor:pointer}
+.date-picker-box .picker-btn-box .no-btn{float:left;width:50%;cursor:pointer}
+.picker-year-box{position:relative;padding:0 30px;}
+.picker-box{position:relative;}
+.picker-box .prev,
+.picker-box .next{position:absolute;top:45%;left:4px;width:20px;height:20px}
+.picker-box .next{position:absolute;left:auto;right:4px}
+.picker-box .prev:before,
+.picker-box .next:before{content:'';display:block;margin-left:5px;width:0;height:0;border:10px solid transparent;border-left-color:#2f6fad}
+.picker-box .prev:before{border-left:0;border-right-color:#2f6fad}
+.picker-box .pick-year{height:36px;line-height:36px;border-bottom:1px solid #ccc}
+.picker-box .pick-year .prev,
+.picker-box .pick-year .next{top:8px}
+
+
+.picker-data-box .pick-date{float:left;cursor:pointer;width:25%;height:36px;line-height:36px;border:1px solid #ccc;border-width:1px 1px 0 0}
+.picker-data-box .pick-date.active{background:#00d6b2}
+.picker-data-box .pick-date:nth-child(4n+1){border-left:1px solid #ccc}
+.picker-data-box .pick-date:nth-child(1),
+.picker-data-box .pick-date:nth-child(2),
+.picker-data-box .pick-date:nth-child(3),
+.picker-data-box .pick-date:nth-child(4){border-top:0}
+.picker-month-box .pick-date:nth-child(4n+1){border-left:0}
+.picker-month-box .pick-date:nth-child(4n+4){border-right:0}
+
+.picker-day-box .pick-date{width:14.28%}
+.picker-day-box .pick-date:nth-child(5),
+.picker-day-box .pick-date:nth-child(6),
+.picker-day-box .pick-date:nth-child(7){border-top:0}
+.picker-day-box .pick-date:nth-child(4n+1){border-left:0}
+.picker-day-box .pick-date:nth-child(4n+4){border-right:1px solid #ccc}
+.picker-day-box .pick-date:nth-child(7n+1){border-left:0}
+.picker-day-box .pick-date:nth-child(7n+7){border-right:0}

@@ -1,0 +1,17 @@
+<div class="date-picker-box">
+    <div class="picker-header">
+        <% _.each(pickerHeader,function(n,i){ %>
+            <span class="picker-type <%=i==0?'active':''%>" data-id="<%=i%>"><%=n%></span>
+        <% }) %>
+    </div>
+    <div class="picker-box">
+
+    </div>
+    <div class="picker-bottom clearfix">
+
+    </div>
+    <div class="picker-btn-box">
+        <span class="yes-btn"><%=btnText[0]%></span>
+        <span class="no-btn"><%=btnText[1]%></span>
+    </div>
+</div>

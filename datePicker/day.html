@@ -1,0 +1,14 @@
+<div class="picker-month-box picker-day-box">
+    <div class="pick-year">
+        <span class="prev"></span>
+        <span class="next"></span>
+        <span class="picker-year-text"><%=year%></span> - <span class="picker-year-text"><%=month%></span>
+    </div>
+    <div class="picker-data-box clearfix">
+        <ul>
+            <% _.each(days,function(n){ %>
+            <li class="pick-date <%=index==n?'active':''%>" data-id="<%=n%>"><%=n%></li>
+            <% }) %>
+        </ul>
+    </div>
+</div>
