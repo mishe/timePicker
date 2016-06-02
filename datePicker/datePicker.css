@@ -1,6 +1,6 @@
 .date-picker-box{position:absolute;top:150px;left:50%;width:300px;margin-left:-150px;background:#fff;box-shadow:0 0 0 2px #ccc;text-align: center}
 .date-picker-box .picker-header{height:40px;}
-.date-picker-box .picker-header .picker-type{float:left;width:25%;line-height:40px}
+.date-picker-box .picker-header .picker-type{float:left;width:25%;line-height:40px;cursor:pointer}
 .date-picker-box .picker-header .picker-type.active{background:#f0f0f0}
 .date-picker-box .picker-box{border:1px solid #ccc;border-width:1px 0}
 .date-picker-box .picker-size{float:left;width:15%;line-height:30px;border-right:1px solid #ccc}
