@@ -3,7 +3,7 @@
 .date-picker-box .picker-header .picker-type{float:left;width:25%;line-height:40px;cursor:pointer}
 .date-picker-box .picker-header .picker-type.active{background:#f0f0f0}
 .date-picker-box .picker-box{border:1px solid #ccc;border-width:1px 0}
-.date-picker-box .picker-size{float:left;width:15%;line-height:30px;border-right:1px solid #ccc}
+.date-picker-box .picker-size{float:left;width:15%;line-height:30px;border-right:1px solid #ccc;cursor:pointer}
 .date-picker-box .picker-size.active{background:#f0f0f0}
 .date-picker-box .picker-size-text{float:left;width:25%;line-height:30px;border-right:1px solid #ccc}
 .date-picker-box .picker-btn-box{height:35px;line-height:35px;border-top:1px solid #ccc}
