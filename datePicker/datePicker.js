@@ -21,9 +21,9 @@ module.exports=function(opt){
         type=store.get('DatePicker')||0, //日期类型：年：0，月：1，周：2，日：3
         value=store.get('DatePickerValue')||0,//选择的时间
         size=store.get('dataPickerBottom')||0, //精确度
-        curYear=new Date().getFullYear(),
-        curMonth=new Date().getMonth()+1;
-        curDay=new Date().getDate();
+        curYear=parseInt(new Date().getFullYear()),
+        curMonth=parseInt(new Date().getMonth())+1;
+        curDay=parseInt(new Date().getDate());
         startYear=new Date(opt.startDate).getFullYear(),
         endYear=new Date(opt.endDate).getFullYear();
 
@@ -73,14 +73,20 @@ module.exports=function(opt){
             showValue=curYear+'-'+showValue;
         }
 
-        if(type==2){
+        if(type==2 ||type==3){
             showValue=curYear+'-'+curMonth+'-'+showValue;
         }
 
         if(curDom[0].tagName=='INPUT'){
             curDom.val(cfg.pickerHeader[type]+':'+showValue+'--'+cfg.pickerBottom[type][size]);
         }
-        opt.callback(type,value,size);
+        opt.callback({
+            type: type,
+            year:curYear,
+            month:curMonth,
+            day:curDay,
+            size: size
+        });
         pickHide();
     }
 
@@ -169,7 +175,7 @@ module.exports=function(opt){
         }
 
         function yearPick(v) {
-            curYear=value=v;
+            curYear=value=parseInt(v);
             store.set('DatePickerValue',v);
         }
     }
@@ -209,15 +215,20 @@ module.exports=function(opt){
         }
 
         function monthPick(v) {
-            curMonth=value=v;
+            curMonth=value=parseInt(v);
             store.set('DatePickerValue',v);
         }
     }
     
-    function displayWeeks() {
+    function displayWeeks(bl) {
+        var eq=2;
         value=curDay;
-        picker.find('.picker-type').eq(2).addClass('active').siblings().removeClass('active');
-        pickerBox.html(Day({index:curDay,year:curYear,month:curMonth,days:getDays()}));
+        if(bl) {
+            eq=3;
+        }
+        picker.find('.picker-type').eq(eq).addClass('active').siblings().removeClass('active');
+        writePicker();
+
         pickerBox.on('click','.prev,.next,.pick-date',function(e){
             var self=$(e.currentTarget);
             if(self.hasClass('next')){
@@ -228,15 +239,25 @@ module.exports=function(opt){
                 WeekPick(self.text());
             }
         });
-        WeekPick(value);
+
+        function writePicker(){
+            pickerBox.html(Day({index:curDay,year:curYear,month:curMonth,days:getDays()}));
+            if(!bl) WeekPick(value);
+        }
+
 
         function prev() {
             curMonth-=1;
             if(curMonth<1){
                 curYear-=1;
                 curMonth=12;
+                if(curYear<startYear){
+                    curYear+=1;
+                    curMonth=1;
+                    return false;
+                }
             }
-            pickerBox.html(Day({index:curDay,year:curYear,month:curMonth,days:getDays()}));
+            writePicker();
         }
 
         function next() {
@@ -244,8 +265,13 @@ module.exports=function(opt){
             if(curMonth>12){
                 curYear+=1;
                 curMonth=1;
+                if(curYear>endYear){
+                    curYear-=1;
+                    curMonth=12;
+                    return false;
+                }
             }
-            pickerBox.html(Day({index:curDay,year:curYear,month:curMonth,days:getDays()}));
+            writePicker();
         }
 
         function WeekPick(v) {
@@ -254,15 +280,17 @@ module.exports=function(opt){
             if(!$.isNumeric(v)){
                 return false;
             }
-            if(len-v<6){
+            if(len-v<6 && !bl){
                 v=len-6;
             }
             obj=pickerBox.find('.pick-date[data-id='+v+']');
             curDay=value=v;
             obj.addClass('active').siblings().removeClass('active');
-            for(var i=0;i<6;i++){
-                obj=obj.next();
-                obj.addClass('active');
+            if(!bl) {
+                for (var i = 0; i < 6; i++) {
+                    obj = obj.next();
+                    obj.addClass('active');
+                }
             }
             store.set('DatePickerValue',value);
         }
@@ -280,11 +308,17 @@ module.exports=function(opt){
             for(i=1;i<len+1;i++){
                 d.push(i);
             }
-            len2=7-d.length%7;
-            for(var i=len2;i>0;i--){
-                d.push('')
+            if(d.length%7>0){
+                len2 = 7 - d.length % 7;
+                for (var i = len2; i > 0; i--) {
+                    d.push('')
+                }
             }
             return d;
         }
+    }
+
+    function displayDays() {
+        displayWeeks(1);
     }
 }
