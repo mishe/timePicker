@@ -23,14 +23,14 @@ module.exports = function (opt) {
         value = store.get('DatePickerValue') || 0,//选择的时间
         size = store.get('dataPickerBottom') || 0, //精确度
         curYear = parseInt(new Date().getFullYear()),
-        curMonth = parseInt(new Date().getMonth()) + 1;
-    curDay = parseInt(new Date().getDate());
-    startYear = new Date(opt.startDate).getFullYear(),
+        curMonth = parseInt(new Date().getMonth()) + 1,
+        curDay = parseInt(new Date().getDate()),
+        startYear = new Date(opt.startDate).getFullYear(),
         startMonth = new Date(opt.startDate).getMonth() + 1,
         startDay = new Date(opt.startDate).getDate(),
         endYear = new Date(opt.endDate).getFullYear(),
-        endMonth = new Date(opt.endDate).getMonth() + 1;
-    endDay = new Date(opt.endDate).getDate();
+        endMonth = new Date(opt.endDate).getMonth() + 1,
+        endDay = new Date(opt.endDate).getDate();
 
     if (curYear < startYear) {
         throw  new Error('开始时间不能大于当前时间');
