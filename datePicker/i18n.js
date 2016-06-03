@@ -1,10 +1,18 @@
 module.exports={
     'zh-cn':{
         pickerHeader:['年','月','周','日'],
-        pickerBottom:[['月','周','日'],['周','日'],['日'],['小时','30分钟','20分钟','10分钟','5分钟']],
+        pickerBottom:[['月','周','日'],['周','日'],['日'],['1H','30m','20m','10m','5m']],
         day:['日','一','二','三','四','五','六'],
         month:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
         startDay:0,
         btnText:['确认','取消']
+    },
+    'en':{
+        pickerHeader:['Year','Month','Week','Day'],
+        pickerBottom:[['Month','Week','Day'],['Week','Day'],['Day'],['1H','30m','20m','10m','5m']],
+        day:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+        month:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        startDay:0,
+        btnText:['submit','cancel']
     }
 }
