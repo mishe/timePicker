@@ -1,4 +1,4 @@
-<span class="picker-size-text">精确度：</span>
+<span class="picker-size-text"><%=sizeName%></span>
 <% _.each(data,function(n,i){ %>
 <span class="picker-size <%=i==index?'active':''%>" data-id="<%=i%>"><%=n%></span>
 <% }) %>
