@@ -9,8 +9,8 @@ require('./datePicker.css');
 module.exports=function(opt){
     var defaultOption={
         lang:'zh-cn',
-        startDate:'1980/01/01 00:00:00',
-        endDate:'2019/12/31 23:59:59',
+        startDate:'1980/05/05 00:00:00',
+        endDate:'2016/10/20 23:59:59',
         curDate:'',
         callback:function(){}
     };
@@ -25,7 +25,11 @@ module.exports=function(opt){
         curMonth=parseInt(new Date().getMonth())+1;
         curDay=parseInt(new Date().getDate());
         startYear=new Date(opt.startDate).getFullYear(),
-        endYear=new Date(opt.endDate).getFullYear();
+        startMonth=new Date(opt.startDate).getMonth()+1,
+        startDay=new Date(opt.startDate).getDate(),
+        endYear=new Date(opt.endDate).getFullYear(),
+        endMonth=new Date(opt.endDate).getMonth()+1;
+        endDay=new Date(opt.endDate).getDate();
 
     if(curYear<startYear){
         throw  new Error('开始时间不能大于当前时间');
@@ -181,9 +185,15 @@ module.exports=function(opt){
     }
 
     function displayMonths(){
-        var year=curYear;
         value=curMonth;
         picker.find('.picker-type').eq(1).addClass('active').siblings().removeClass('active');
+        if(curYear==startYear && curMonth<startMonth){
+            curMonth=startMonth;
+        }
+        if(curYear==endYear && curMonth>endMonth){
+            curMonth=endMonth;
+        }
+
         pickerBox.html(Month({index:curMonth,year:curYear,month:cfg.month}));
         pickerBox.on('click','.prev,.next,.pick-date',function(e){
             var self=$(e.currentTarget);
@@ -192,8 +202,12 @@ module.exports=function(opt){
             }else if(self.hasClass('prev')){
                 prev();
             }else if(!self.hasClass('active')){
+                var v=self.attr('data-id');
+                if((curYear==startYear && v<startMonth) ||(curYear==endYear && v>endMonth)){
+                    return false;
+                }
                 self.addClass('active').siblings().removeClass('active');
-                monthPick(self.attr('data-id'));
+                monthPick(v);
             }
         });
 
@@ -232,8 +246,14 @@ module.exports=function(opt){
         pickerBox.on('click','.prev,.next,.pick-date',function(e){
             var self=$(e.currentTarget);
             if(self.hasClass('next')){
+                if(curYear==endYear && curMonth>=endMonth){
+                    return false;
+                }
                 next();
             }else if(self.hasClass('prev')){
+                if(curYear==startYear && curMonth<=startMonth){
+                    return false;
+                }
                 prev();
             }else {
                 WeekPick(self.text());
@@ -241,8 +261,21 @@ module.exports=function(opt){
         });
 
         function writePicker(){
+            if(curYear==startYear && curMonth<startMonth){
+                curMonth=startMonth;
+            }
+            if(curYear==endYear && curMonth>endMonth){
+                curMonth=endMonth;
+            }
+            if(curYear==endYear && curMonth==endMonth && curDay>endDay){
+                curDay=endDay;
+            }
+            if(curYear==startYear && curMonth==startMonth && curDay<startDay){
+                curDay=startDay;
+            }
+
             pickerBox.html(Day({index:curDay,year:curYear,month:curMonth,days:getDays()}));
-            if(!bl) WeekPick(value);
+            if(!bl) WeekPick(curDay);
         }
 
 
@@ -277,9 +310,15 @@ module.exports=function(opt){
         function WeekPick(v) {
             var len=new Date(curYear,curMonth,0).getDate(),
                 obj;
-            if(!$.isNumeric(v)){
+            if(!$.isNumeric(v) ||(curYear==startYear && curMonth==startMonth && v<startDay)
+                ||(curYear==endYear && curMonth==endMonth && v>endDay)){
                 return false;
             }
+            if(curYear==endYear && curMonth==endMonth && len>endDay){
+                len=endDay;
+            }
+
+
             if(len-v<6 && !bl){
                 v=len-6;
             }
