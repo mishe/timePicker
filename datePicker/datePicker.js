@@ -144,13 +144,15 @@ module.exports = function (opt) {
             } else if (self.hasClass('prev')) {
                 prev();
             } else if (!self.hasClass('active')) {
+                var v = $.trim(self.text());
+                if (v == '') return false;
                 self.addClass('active').siblings().removeClass('active');
-                yearPick(self.text());
+                yearPick(v);
             }
         });
 
         function getYears(sy) {
-            var a = [];
+            var a = [], len;
             for (var i = 0; i < 12; i++) {
                 if (sy - i >= startYear) {
                     a.push(sy - i)
@@ -158,6 +160,12 @@ module.exports = function (opt) {
                     break;
                 }
             }
+            len = a.length;
+
+            if (len < 12) {
+                a = a.concat(['', '', '', '', '', '', '', '', '', '', '', '']).slice(0, 12);
+            }
+
             return a;
         }
 
