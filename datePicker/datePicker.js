@@ -2,19 +2,19 @@ var template = _.template(require('./datePicker.html')),
     Year = _.template(require('./year.html')),
     Bottom = _.template(require('./bottom.html')),
     Month = _.template(require('./month.html')),
-    Day = _.template(require('./day.html')),
-    cfg = require('./i18n');
+    Day = _.template(require('./day.html'));
 require('./datePicker.css');
 
 module.exports = function (opt) {
     var defaultOption = {
-        lang: 'zh-cn',
-        startDate: '1980/05/05 00:00:00',
-        endDate: '2016/10/20 23:59:59',
-        curDate: '',
-        callback: function () {
-        }
-    };
+            lang: 'zh-cn',
+            startDate: '1980/05/05 00:00:00',
+            endDate: '2020/10/20 23:59:59',
+            curDate: '',
+            callback: function () {
+            }
+        },
+        cfg=require('./i18n');
     opt = $.extend(true, defaultOption, opt);
     cfg = cfg[opt.lang];
 
@@ -46,6 +46,7 @@ module.exports = function (opt) {
     });
 
     function showPicker() {
+        console.log(cfg)
         picker = $(template(cfg));
         pickerBox = picker.find('.picker-box');
         pickerBottom = picker.find('.picker-bottom');
@@ -84,6 +85,8 @@ module.exports = function (opt) {
 
         if (curDom[0].tagName == 'INPUT') {
             curDom.val(cfg.pickerHeader[type] + ':' + showValue + '--' + cfg.pickerBottom[type][size]);
+        }else{
+            curDom.find('.data-value').html(cfg.pickerHeader[type] + ':' + showValue + '--' + cfg.pickerBottom[type][size]);
         }
         opt.callback({
             type: type,
@@ -368,4 +371,14 @@ module.exports = function (opt) {
     function displayDays() {
         displayWeeks(1);
     }
+     return {
+         setDate:function(d){
+             type= d.type;
+             curYear= d.year;
+             curMonth= d.month;
+             curDay= d.day;
+             size= d.size;
+             pickerConfim();
+         }
+     }
 }
