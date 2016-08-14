@@ -69,7 +69,7 @@ module.exports = function (opt) {
         pickType(type, 1);//初始化
     }
 
-    function pickerConfim() {
+    function pickerConfim(bl) {
         var showValue = value;
         if (showValue == 0) {
             $.toast('请选择一个具体的时间');
@@ -87,6 +87,9 @@ module.exports = function (opt) {
             curDom.val(cfg.pickerHeader[type] + ':' + showValue + '--' + cfg.pickerBottom[type][size]);
         }else{
             curDom.find('.data-value').html(cfg.pickerHeader[type] + ':' + showValue + '--' + cfg.pickerBottom[type][size]);
+        }
+        if(bl){
+            return;
         }
         opt.callback({
             type: type,
@@ -378,7 +381,7 @@ module.exports = function (opt) {
              curMonth= d.month;
              curDay= d.day;
              size= d.size;
-             pickerConfim();
+             pickerConfim(1);
          }
      }
 }
